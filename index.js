@@ -13,10 +13,10 @@ conectarDB();
 const dominiosPermitidos = [process.env.FRONTEND_URL];
 
 const corsOptions = {
-    origin: async function(origin, callback) {
+    origin: function(origin, callback) {
         if (dominiosPermitidos.indexOf(origin)!== -1) {
             // El origen del request esta permitidos
-            await callback(null, true);
+            callback(null, true);
         } else {
             callback(new Error('No permitido por CORS'));
         }
