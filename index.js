@@ -1,4 +1,4 @@
-import express from "express";
+import express  from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import conectarDB from "./config/db.js";
@@ -13,19 +13,17 @@ conectarDB();
 const dominiosPermitidos = [process.env.FRONTEND_URL];
 
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (dominiosPermitidos.indexOf(origin) !== -1) {
+    origin: async function(origin, callback) {
+        if (dominiosPermitidos.indexOf(origin)!== -1) {
             // El origen del request esta permitidos
-            callback(null, true);
+            await callback(null, true);
         } else {
             callback(new Error('No permitido por CORS'));
         }
     }
 };
 
-app.use(cors({
-    origin: '*'
-}));
+app.use(cors(corsOptions));
 
 app.use("/api/veterinarios", veterinarioRouters);
 app.use("/api/pacientes", pacientesRouters);
